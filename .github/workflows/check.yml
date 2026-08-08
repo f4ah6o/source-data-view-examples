@@ -15,7 +15,19 @@ jobs:
           node-version: 22
       - run: corepack enable
       - run: pnpm install --no-frozen-lockfile
+      - run: pnpm format
       - run: pnpm check
-      - name: Show lockfile update
+      - name: Diagnostic generated files
         if: always()
-        run: git diff -- pnpm-lock.yaml || true
+        run: |
+          for file in \
+            examples/employee-qualifications/kintone/main.ts \
+            examples/employee-qualifications/kintone/page.ts \
+            examples/employee-qualifications/kintone/render.ts \
+            examples/employee-qualifications/kintone/runtime.ts \
+            examples/employee-qualifications/test/kintone-customization.test.ts \
+            pnpm-lock.yaml; do
+            echo "===== BEGIN $file ====="
+            cat "$file"
+            echo "===== END $file ====="
+          done
