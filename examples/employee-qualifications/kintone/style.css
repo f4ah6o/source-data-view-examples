@@ -1,0 +1,134 @@
+.sdv-eq {
+  box-sizing: border-box;
+  margin: 16px 0;
+  color: #202124;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.sdv-eq *,
+.sdv-eq *::before,
+.sdv-eq *::after {
+  box-sizing: inherit;
+}
+
+.sdv-eq__title,
+.sdv-eq__department,
+.sdv-eq__as-of {
+  margin: 0;
+}
+
+.sdv-eq__title {
+  font-size: 20px;
+}
+
+.sdv-eq__as-of {
+  margin-top: 4px;
+  color: #5f6368;
+  font-size: 12px;
+}
+
+.sdv-eq__section {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.sdv-eq__department {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.sdv-eq__matrix,
+.sdv-eq__expiration {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.sdv-eq__matrix th,
+.sdv-eq__matrix td,
+.sdv-eq__expiration th,
+.sdv-eq__expiration td {
+  border: 1px solid #dfe1e5;
+  padding: 8px 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sdv-eq__matrix thead th,
+.sdv-eq__expiration thead th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.sdv-eq__employee {
+  position: sticky;
+  left: 0;
+  min-width: 180px;
+  background: #fff;
+  text-align: left !important;
+  white-space: nowrap;
+}
+
+.sdv-eq__avatar {
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 50%;
+  background: #eef0f2;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.sdv-eq__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sdv-eq__employee-name {
+  vertical-align: middle;
+}
+
+.sdv-eq__status {
+  min-width: 72px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sdv-eq__status--missing {
+  color: #9aa0a6;
+}
+
+.sdv-eq__status--expiring {
+  background: #fff8e1;
+}
+
+.sdv-eq__status--expired {
+  background: #fce8e6;
+}
+
+.sdv-eq__expiration {
+  width: 100%;
+}
+
+.sdv-eq__expiration td {
+  text-align: left;
+}
+
+.sdv-eq__empty {
+  color: #5f6368;
+}
+
+.sdv-eq--error {
+  border: 1px solid #d93025;
+  padding: 12px;
+}
+
+.sdv-eq__error {
+  margin: 0;
+  white-space: pre-wrap;
+}

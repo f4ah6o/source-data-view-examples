@@ -1,2 +1,4 @@
 node_modules/
 .DS_Store
+examples/*/kintone/dist/
+examples/*/kintone/config.js
