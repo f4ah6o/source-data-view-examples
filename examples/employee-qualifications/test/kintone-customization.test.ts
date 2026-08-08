@@ -61,6 +61,28 @@ test("customization config requires a custom-view ID", () => {
   );
 });
 
+test("customization config rejects nonexistent calendar dates", () => {
+  const baseConfig = {
+    apps: {
+      employees: 1,
+      qualificationDefinitions: 2,
+      employeeQualifications: 3,
+    },
+    viewId: 123456,
+    targetRoleIds: ["construction"],
+  };
+
+  for (const asOf of ["2026-02-31", "2026-13-01", "2025-02-29", "2026-04-31"]) {
+    assert.throws(
+      () => readCustomizationConfig({ ...baseConfig, asOf }),
+      /asOf must be a real YYYY-MM-DD calendar date/,
+      asOf,
+    );
+  }
+
+  assert.equal(readCustomizationConfig({ ...baseConfig, asOf: "2024-02-29" }).asOf, "2024-02-29");
+});
+
 test("kintone.api fetch adapter moves GET query parameters into the API params object", async () => {
   const calls: unknown[][] = [];
   const api: KintoneApi = async (url, method, params) => {

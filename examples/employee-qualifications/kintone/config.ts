@@ -88,8 +88,25 @@ function requireBoolean(value: unknown, label: string): boolean {
 }
 
 function requireCalendarDate(value: unknown, label: string): string {
-  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    throw new TypeError(`${label} must be YYYY-MM-DD`);
-  }
+  if (typeof value !== "string") throwCalendarDateError(label);
+
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) throwCalendarDateError(label);
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const daysInMonth = [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const maximumDay = daysInMonth[month - 1];
+
+  if (maximumDay === undefined || day < 1 || day > maximumDay) throwCalendarDateError(label);
   return value;
+}
+
+function isLeapYear(year: number): boolean {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function throwCalendarDateError(label: string): never {
+  throw new TypeError(`${label} must be a real YYYY-MM-DD calendar date`);
 }
