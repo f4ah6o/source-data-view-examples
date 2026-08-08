@@ -2,6 +2,7 @@ import type { QualificationAppIds } from "../domain/index.ts";
 
 export interface EmployeeQualificationsCustomizationConfig {
   readonly apps: QualificationAppIds;
+  readonly viewId: number;
   readonly targetRoleIds: readonly string[];
   readonly targetQualificationCategories: readonly string[];
   readonly expiringWithinDays: number;
@@ -32,6 +33,7 @@ export function readCustomizationConfig(
         "apps.employeeQualifications",
       ),
     },
+    viewId: requireNonNegativeInteger(input.viewId, "viewId"),
     targetRoleIds: requireStringArray(input.targetRoleIds, "targetRoleIds", true),
     targetQualificationCategories: requireStringArray(
       input.targetQualificationCategories ?? [],

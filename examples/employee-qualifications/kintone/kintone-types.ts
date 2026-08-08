@@ -5,7 +5,7 @@ export interface KintoneApi {
 }
 
 export interface KintoneIndexEvent {
-  readonly type: string;
+  readonly type: "app.record.index.show" | "mobile.app.record.index.show";
   readonly appId: number;
   readonly viewId: number;
   readonly [key: string]: unknown;
@@ -15,12 +15,9 @@ export interface KintoneGlobal {
   readonly api: KintoneApi;
   readonly events: {
     on(
-      type: "app.record.index.show",
+      type: readonly ["app.record.index.show", "mobile.app.record.index.show"],
       handler: (event: KintoneIndexEvent) => KintoneIndexEvent | Promise<KintoneIndexEvent>,
     ): void;
-  };
-  readonly app: {
-    getHeaderSpaceElement(): HTMLElement | null;
   };
 }
 

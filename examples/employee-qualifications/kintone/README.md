@@ -1,17 +1,29 @@
 # kintone customization — employee qualifications
 
-Vite-built PC customization for the existing employee-qualifications example.
+Vite-built responsive customization for the existing employee-qualifications example.
 
 ```text
-kintone session
-  → kintone.api() fetch adapter
+kintone custom view (mount only)
+  → kintone session / kintone.api()
   → @f4ah6o/data-source
   → source-neutral domain projection
   → @f4ah6o/data-view Matrix/Table ViewModels
-  → DOM renderer
+  → responsive DOM app shell
 ```
 
-The domain layer remains unchanged and does not import DOM or kintone JavaScript APIs. This directory is the runtime/rendering boundary only.
+The domain and UI do not depend on kintone's internal page DOM. kintone is only the host lifecycle and data transport boundary.
+
+## Custom view as the app shell host
+
+Create a kintone list whose display format is **Customize** and put only this HTML in it:
+
+```html
+<div id="sdv-employee-qualifications-app"></div>
+```
+
+Configure that custom view to be available on both PC and mobile, then copy its list/view ID into `config.js` as `viewId`.
+
+Using a custom view avoids hiding or rewriting undocumented kintone internal elements. kintone supplies the page/lifecycle; the contents of the view are entirely owned by this example.
 
 ## Required apps and field codes
 
@@ -25,7 +37,7 @@ The customization reads all three apps through the logged-in user's kintone sess
 
 ## Configure
 
-Copy the example config and edit app IDs / stable role IDs / category IDs for the target environment:
+Copy the example config and edit app IDs, custom-view ID, stable role IDs, and category IDs:
 
 ```sh
 cp examples/employee-qualifications/kintone/config.example.js \
@@ -54,12 +66,18 @@ The JavaScript is an IIFE bundle suitable for kintone customization rather than 
 
 ## Register in kintone
 
-For the PC customization, register JavaScript in this order:
+Register JavaScript in this order for both **PC** and **mobile** customization:
 
 1. `config.js`
 2. `dist/employee-qualifications.js`
 
-Register `dist/employee-qualifications.css` as the CSS customization file. The script renders into the record-list header on `app.record.index.show`.
+Register `dist/employee-qualifications.css` for both targets as well.
+
+The same renderer handles both `app.record.index.show` and `mobile.app.record.index.show`; there is no separate mobile UI implementation.
+
+## Responsive behavior
+
+The app shell owns its layout. Desktop uses a matrix/table layout. On narrow screens the matrix remains horizontally scrollable with a sticky employee column, while the expiration table becomes stacked row cards. No kintone internal CSS class or DOM selector is used for responsive behavior.
 
 ## Why the fetch adapter exists
 

@@ -106,7 +106,11 @@ function renderMatrixBody(
     tr.append(renderEmployee(employee, options));
     for (const cell of row.cells) {
       const status = cell.value?.status ?? "missing";
-      const td = element("td", `sdv-eq__status sdv-eq__status--${status}`, STATUS_MARK[status]);
+      const td = element(
+        "td",
+        `sdv-eq__status sdv-eq__status--${status}`,
+        STATUS_MARK[status],
+      );
       const expiresAt = cell.value?.qualification?.expiresAt;
       td.title = expiresAt ? `${STATUS_LABEL[status]} / ${expiresAt}` : STATUS_LABEL[status];
       td.dataset.status = status;
@@ -195,6 +199,7 @@ function renderExpirationTable(page: EmployeeQualificationsPageView): HTMLElemen
     for (const cell of row.cells) {
       const value = cell.value == null ? "" : String(cell.value);
       const td = element("td", "", value);
+      td.dataset.label = labels[cell.field] ?? cell.field;
       if (cell.field === "status") td.dataset.status = value;
       tr.append(td);
     }

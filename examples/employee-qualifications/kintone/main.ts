@@ -9,17 +9,24 @@ import {
 } from "./render.ts";
 import { createBrowserKintoneRuntime } from "./runtime.ts";
 
-const ROOT_ID = "sdv-employee-qualifications";
+const ROOT_ID = "sdv-employee-qualifications-app";
+const INDEX_EVENTS = ["app.record.index.show", "mobile.app.record.index.show"] as const;
 let renderGeneration = 0;
 
-kintone.events.on("app.record.index.show", async (event: KintoneIndexEvent) => {
-  const host = kintone.app.getHeaderSpaceElement();
-  if (!host) return event;
+kintone.events.on(INDEX_EVENTS, async (event: KintoneIndexEvent) => {
+  const config = readCustomizationConfig();
+  if (event.viewId !== config.viewId) return event;
+
+  const root = document.getElementById(ROOT_ID);
+  if (!root) {
+    console.error(
+      `employee qualifications customization mount #${ROOT_ID} was not found in the custom view`,
+    );
+    return event;
+  }
 
   const generation = ++renderGeneration;
-  const root = ensureRoot(host);
   try {
-    const config = readCustomizationConfig();
     const origin = location.origin;
     const runtime = createBrowserKintoneRuntime({
       api: (url, method, params) => kintone.api(url, method, params),
@@ -41,13 +48,3 @@ kintone.events.on("app.record.index.show", async (event: KintoneIndexEvent) => {
 
   return event;
 });
-
-function ensureRoot(host: HTMLElement): HTMLElement {
-  const existing = host.querySelector<HTMLElement>(`#${ROOT_ID}`);
-  if (existing) return existing;
-
-  const root = document.createElement("div");
-  root.id = ROOT_ID;
-  host.append(root);
-  return root;
-}

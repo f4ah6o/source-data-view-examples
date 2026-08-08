@@ -4,6 +4,7 @@ globalThis.EMPLOYEE_QUALIFICATIONS_CONFIG = {
     qualificationDefinitions: 2,
     employeeQualifications: 3,
   },
+  viewId: 123456,
   targetRoleIds: ["construction"],
   targetQualificationCategories: ["architecture", "civil"],
   expiringWithinDays: 90,

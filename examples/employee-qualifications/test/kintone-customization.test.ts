@@ -5,13 +5,14 @@ import { readCustomizationConfig } from "../kintone/config.ts";
 import { createKintoneApiFetch } from "../kintone/kintone-fetch.ts";
 import type { KintoneApi } from "../kintone/kintone-types.ts";
 
-test("customization config validates app IDs and applies non-secret defaults", () => {
+test("customization config validates app/view IDs and applies non-secret defaults", () => {
   const config = readCustomizationConfig({
     apps: {
       employees: 1,
       qualificationDefinitions: 2,
       employeeQualifications: 3,
     },
+    viewId: 123456,
     targetRoleIds: ["construction"],
   });
 
@@ -21,6 +22,7 @@ test("customization config validates app IDs and applies non-secret defaults", (
       qualificationDefinitions: 2,
       employeeQualifications: 3,
     },
+    viewId: 123456,
     targetRoleIds: ["construction"],
     targetQualificationCategories: [],
     expiringWithinDays: 90,
@@ -37,9 +39,25 @@ test("customization config rejects an empty role filter", () => {
           qualificationDefinitions: 2,
           employeeQualifications: 3,
         },
+        viewId: 123456,
         targetRoleIds: [],
       }),
     /targetRoleIds must not be empty/,
+  );
+});
+
+test("customization config requires a custom-view ID", () => {
+  assert.throws(
+    () =>
+      readCustomizationConfig({
+        apps: {
+          employees: 1,
+          qualificationDefinitions: 2,
+          employeeQualifications: 3,
+        },
+        targetRoleIds: ["construction"],
+      }),
+    /viewId must be a non-negative integer/,
   );
 });
 
