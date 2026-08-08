@@ -1,0 +1,35 @@
+{
+  "name": "source-data-view-examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Runnable proof that Source → Data → Domain Projection → View holds up for real business domains, built on @f4ah6o/data-source and @f4ah6o/data-view.",
+  "keywords": [
+    "data",
+    "domain-projection",
+    "examples",
+    "headless",
+    "kintone"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test --experimental-strip-types examples/*/test/*.test.ts",
+    "lint": "oxlint .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "dependencies": {
+    "@f4ah6o/data-source": "file:./vendor/f4ah6o-data-source-0.1.0.tgz",
+    "@f4ah6o/data-view": "file:./vendor/f4ah6o-data-view-0.1.0.tgz",
+    "kintone-mock-server": "file:./vendor/kintone-mock-server-0.1.0.tgz"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "oxfmt": "0.61.0",
+    "oxlint": "1.76.0",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
+}
